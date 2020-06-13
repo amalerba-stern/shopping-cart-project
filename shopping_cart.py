@@ -36,7 +36,15 @@ def to_usd(my_price):
 
 # TODO: write some Python code here to produce the desired output
 
+shopping_cart = []
+x = None
 
+# Get product IDs as inputs
+# Allow user to continue adding items until they type "DONE"
+while x != "DONE":
+    x = input("Please input a product identifier:")
+    if x != "DONE":
+        shopping_cart.append(int(x))
 
 store_name = "Great Groceries"
 store_phone_number = "212-555-1234"
@@ -53,6 +61,24 @@ print("----------------------")
 checkout_time = datetime.datetime.now()
 print("CHECKOUT AT:", checkout_time.strftime("%Y-%m-%d %I:%M %p"))
 print("----------------------")
+
+running_total = []
+
+print("YOUR SELECTED ITEMS:")
+for item in shopping_cart:
+    name = [product["name"] for product in products if product["id"] == item][0]
+    price = [product["price"] for product in products if product["id"] == item][0]
+    running_total.append(price)
+    print(f"...{name} ({to_usd(price)})")
+
+print("----------------------")
+subtotal = sum(running_total)
+print("SUBTOTAL:", to_usd(subtotal))
+sales_tax_rate_nyc = 0.0875
+sales_tax = subtotal * sales_tax_rate_nyc
+print("SALES TAX:", to_usd(sales_tax))
+total = subtotal + sales_tax
+print("TOTAL:", to_usd(total))
 
 print("----------------------")
 print("Thank you for shopping here today!")
