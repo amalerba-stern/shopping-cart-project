@@ -36,14 +36,26 @@ def to_usd(my_price):
 
 # TODO: write some Python code here to produce the desired output
 
+products_ids = [product["id"] for product in products]
+first_id = products_ids[0]
+last_id = products_ids[-1]
+error_msg = f"This is not a valid input. A product id must be a number between {first_id} and {last_id}."
 shopping_cart = []
 x = None
 
 # Get product IDs as inputs
 # Allow user to continue adding items until they type "DONE"
-while x != "DONE":
-    x = input("Please input a product identifier:")
-    if x != "DONE":
+while True:
+    x = input(f"Please input a product identifier ({first_id}-{last_id}):")
+    if x == "DONE":
+        break
+    try:
+        if int(x) not in products_ids:
+            print(error_msg)
+            continue
+    except ValueError:
+        print(error_msg)
+    else:
         shopping_cart.append(int(x))
 
 store_name = "Great Groceries"
